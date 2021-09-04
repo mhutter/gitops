@@ -3,7 +3,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: podinfo
-  namespace: podinfo
+  namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
@@ -13,7 +13,7 @@ spec:
     targetRevision: HEAD
     path: podinfo/
   destination:
-    namespace: kube-system
+    namespace: podinfo
     server: https://kubernetes.default.svc
   syncPolicy:
     automated:
