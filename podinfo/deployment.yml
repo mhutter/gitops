@@ -17,9 +17,9 @@ spec:
         app: podinfo
     spec:
       containers:
-      - image: quay.io/mhutter/podinfo:latest
-        imagePullPolicy: Always
-        name: podinfo
-        ports:
-        - containerPort: 8080
-          protocol: TCP
+        - image: quay.io/mhutter/podinfo:latest
+          imagePullPolicy: Always
+          name: podinfo
+          ports:
+            - containerPort: 8080
+              protocol: TCP
