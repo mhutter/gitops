@@ -1,0 +1,32 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ingress-nginx
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: system
+  source:
+    repoURL: https://github.com/kubernetes/ingress-nginx.git
+    targetRevision: controller-v1.0.0
+    path: charts/ingress-nginx/
+    helm:
+      values: |-
+        controller:
+          kind: DaemonSet
+          service:
+            type: NodePort
+          nodeSelector:
+            node-role.kubernetes.io/master: ''
+          config:
+            use-proxy-protocol: true
+          watchIngressWithoutClass: true
+  destination:
+    namespace: ingress-nginx
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
