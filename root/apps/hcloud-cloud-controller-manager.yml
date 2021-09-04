@@ -1,0 +1,19 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hcloud-cloud-controller-manager
+  namespace: argocd
+spec:
+  project: system
+  source:
+    repoURL: https://github.com/mhutter/gitops.git
+    targetRevision: HEAD
+    path: hcloud-cloud-controller-manager/
+  destination:
+    namespace: kube-system
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

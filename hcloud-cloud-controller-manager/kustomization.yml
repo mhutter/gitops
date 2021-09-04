@@ -1,0 +1,3 @@
+---
+resources:
+  - 'https://github.com/hetznercloud/hcloud-cloud-controller-manager/releases/latest/download/ccm.yaml'
