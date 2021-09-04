@@ -1,6 +1,8 @@
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+# don't use namespace here or RBAC rolebindings will be created in wrong
+# namespaces
 resources:
   - 'https://github.com/jetstack/cert-manager/releases/download/v1.5.3/cert-manager.yaml'
   - clusterissuer.yml
