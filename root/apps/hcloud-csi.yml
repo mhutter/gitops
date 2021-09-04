@@ -1,0 +1,24 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hcloud-csi
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: system
+  source:
+    repoURL: https://github.com/hetznercloud/csi-driver.git
+    targetRevision: v1.6.0
+    path: deploy/kubernetes
+    directory:
+      include: hcloud-csi.yml
+      recurse: false
+  destination:
+    namespace: kube-system
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
