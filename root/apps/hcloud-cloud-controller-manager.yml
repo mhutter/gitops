@@ -4,6 +4,8 @@ kind: Application
 metadata:
   name: hcloud-cloud-controller-manager
   namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: system
   source:
