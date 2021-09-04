@@ -6,6 +6,8 @@ metadata:
   namespace: podinfo
   labels:
     app: podinfo
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
 spec:
   rules:
     - host: podinfo.app.mhnet.dev
@@ -18,3 +20,7 @@ spec:
                 name: podinfo
                 port:
                   number: 8080
+  tls:
+    - hosts:
+        - podinfo.app.mhnet.dev
+      secretName: tls-podinfo
