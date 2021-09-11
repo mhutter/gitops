@@ -7,6 +7,7 @@ metadata:
   name: podinfo
   namespace: podinfo
 spec:
+  replicas: 2
   selector:
     matchLabels:
       app: podinfo
@@ -16,10 +17,31 @@ spec:
       labels:
         app: podinfo
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: topology.kubernetes.io/hostname
+              labelSelector:
+                matchExpressions:
+                  - {key: app, operator: In, values: ["podinfo"]}
       containers:
         - image: quay.io/mhutter/podinfo:latest
           imagePullPolicy: Always
           name: podinfo
           ports:
-            - containerPort: 8080
+            - name: http
+              containerPort: 8080
               protocol: TCP
+          startupProbe:
+            httpGet:
+              path: /
+              port: http
+            periodSeconds: 1
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
