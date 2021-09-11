@@ -20,6 +20,6 @@
     "fileMatch": ["^system-upgrade/plan-.+\\.ya?ml$"],
     "matchStrings": ["version: (?<currentValue>)\n"],
     "datasourceTemplate": "github-releases",
-    "depName": "kubernetes/kubernetes"
+    "depNameTemplate": "kubernetes/kubernetes"
   }]
 }
