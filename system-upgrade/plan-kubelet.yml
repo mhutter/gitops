@@ -5,7 +5,7 @@ metadata:
   name: kubelet
   namespace: system-upgrade
 spec:
-  version: v1.21.4
+  version: v1.22.0
   concurrency: 1
   nodeSelector:
     matchExpressions:
@@ -21,13 +21,29 @@ spec:
       - -c
       - |-
         set -e -x
-        apt-get update
+
         kubeadm upgrade node
+
+        apt-get update
         apt-get install -y --allow-change-held-packages \
           "kubeadm=${SYSTEM_UPGRADE_PLAN_LATEST_VERSION#v}-00" \
           "kubelet=${SYSTEM_UPGRADE_PLAN_LATEST_VERSION#v}-00" \
           "kubectl=${SYSTEM_UPGRADE_PLAN_LATEST_VERSION#v}-00"
         apt-mark hold kubeadm kubelet kubectl
+
+        kubelet_pid="$(pgrep kubelet)"
         systemctl daemon-reload
         systemctl restart kubelet
-        sleep 60  # give the kubelet some time to restart
+
+        echo -n "Waiting for kubelet to restart"
+        while [[ "$(pgrep kubelet)" == "$kubelet_pid" ]]; do
+          echo -n .
+          sleep 1
+        done
+
+        while [[ "$(curl -sSk https://127.0.0.1:10250/healthz)" != "Unauthorizedd" ]]; do
+          echo -n .
+          sleep 1
+        done
+        echo
+        echo "All done"
