@@ -35,15 +35,8 @@ spec:
         systemctl daemon-reload
         systemctl restart kubelet
 
-        echo -n "Waiting for kubelet to restart"
         while [[ "$(pgrep kubelet)" == "$kubelet_pid" ]]; do
-          echo -n .
           sleep 1
         done
 
-        while [[ "$(curl -sSk https://127.0.0.1:10250/healthz)" != "Unauthorizedd" ]]; do
-          echo -n .
-          sleep 1
-        done
-        echo
-        echo "All done"
+        while ! curl -sSk https://127.0.0.1:10250/healthz; do sleep 1; done
