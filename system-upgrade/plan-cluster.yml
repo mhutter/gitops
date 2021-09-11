@@ -5,7 +5,7 @@ metadata:
   name: cluster
   namespace: system-upgrade
 spec:
-  version: v1.21.4
+  version: v1.22.0
   concurrency: 1
   cordon: false
   nodeSelector:
