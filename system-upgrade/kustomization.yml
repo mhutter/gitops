@@ -5,7 +5,10 @@ resources:
   - 'https://github.com/rancher/system-upgrade-controller/releases/download/v0.7.5/system-upgrade-controller.yaml'
 
 patches:
-  - patch: |-
+  - target:
+      kind: Deployment
+      name: system-upgrade-controller
+    patch: |-
       - op: replace
         path: /spec/template/spec/affinity/nodeAffinity
         value:
