@@ -22,14 +22,14 @@ spec:
       - |-
         set -e -x
 
-        kubeadm upgrade node
-
         apt-get update
         apt-get install -y --allow-change-held-packages \
           "kubeadm=${SYSTEM_UPGRADE_PLAN_LATEST_VERSION#v}-00" \
           "kubelet=${SYSTEM_UPGRADE_PLAN_LATEST_VERSION#v}-00" \
           "kubectl=${SYSTEM_UPGRADE_PLAN_LATEST_VERSION#v}-00"
         apt-mark hold kubeadm kubelet kubectl
+
+        kubeadm upgrade node
 
         kubelet_pid="$(pgrep kubelet)"
         systemctl daemon-reload
