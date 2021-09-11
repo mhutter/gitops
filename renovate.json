@@ -5,5 +5,15 @@
       "^root/.+\\.ya?ml$",
       "^install\\.yml$"
     ]
+  },
+  "kubernetes": {
+    "fileMatch": [
+      "^()/.+\\.ya?ml$"
+    ]
+  },
+  "kustomize": {
+    "fileMatch": [
+      "(^|/)kustomization\.ya?ml$"
+    ]
   }
 }
