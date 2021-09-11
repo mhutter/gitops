@@ -1,0 +1,24 @@
+---
+apiVersion: upgrade.cattle.io/v1
+kind: Plan
+metadata:
+  name: kubeadm
+  namespace: system-upgrade
+spec:
+  version: v1.21.4
+  concurrency: 3
+  cordon: false
+  nodeSelector:
+    matchExpressions:
+      - {key: node-role.kubernetes.io/master, operator: Exists}
+  upgrade:
+    image: "ubuntu:bionic"
+    command: ["chroot", "/host"]
+    args:
+      - /bin/sh
+      - -c
+      - |-
+        apt-get update && \
+        apt-get install -y --allow-change-held-packages \
+          "kubeadm=${SYSTEM_UPGRADE_PLAN_LATEST_VERSION#v}-00" && \
+        apt-mark hold kubeadm
