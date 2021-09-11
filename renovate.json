@@ -1,0 +1,9 @@
+{
+  "extends": ["config:base"],
+  "argocd": {
+    "fileMatch": [
+      "^root/.+\\.ya?ml$",
+      "^install\\.yml$"
+    ]
+  }
+}
