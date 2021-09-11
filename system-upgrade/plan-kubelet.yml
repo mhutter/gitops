@@ -1,0 +1,33 @@
+---
+apiVersion: upgrade.cattle.io/v1
+kind: Plan
+metadata:
+  name: kubelet
+  namespace: system-upgrade
+spec:
+  version: v1.21.4
+  concurrency: 1
+  nodeSelector:
+    matchExpressions:
+      - {key: kubernetes.io/os, operator: In, values: ["linux"]}
+  serviceAccountName: system-upgrade
+  drain:
+    force: true
+  upgrade:
+    image: "ubuntu:bionic"
+    command: ["chroot", "/host"]
+    args:
+      - /bin/sh
+      - -c
+      - |-
+        set -e -x
+        apt-get update
+        kubeadm upgrade node
+        apt-get install -y --allow-change-held-packages \
+          "kubeadm=${SYSTEM_UPGRADE_PLAN_LATEST_VERSION#v}-00" \
+          "kubelet=${SYSTEM_UPGRADE_PLAN_LATEST_VERSION#v}-00" \
+          "kubectl=${SYSTEM_UPGRADE_PLAN_LATEST_VERSION#v}-00"
+        apt-mark hold kubeadm kubelet kubectl
+        systemctl daemon-reload
+        systemctl restart kubelet
+        sleep 60  # give the kubelet some time to restart
