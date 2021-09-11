@@ -13,7 +13,7 @@
   },
   "kustomize": {
     "fileMatch": [
-      "(^|/)kustomization\.ya?ml$"
+      "(^|/)kustomization\\.ya?ml$"
     ]
   }
 }
