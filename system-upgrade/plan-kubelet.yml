@@ -22,12 +22,19 @@ spec:
       - |-
         set -e -x
 
+        VER="${SYSTEM_UPGRADE_PLAN_LATEST_VERSION#v}"
+        MINOR="$(echo $VER | cut -d. -f1-2)"
+        echo \
+          "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/${MINOR}/xUbuntu_20.04/ /" \
+          > /etc/apt/sources.list.d/crio.list
+
         apt-get update
         apt-get install -y --allow-change-held-packages \
-          "kubeadm=${SYSTEM_UPGRADE_PLAN_LATEST_VERSION#v}-00" \
-          "kubelet=${SYSTEM_UPGRADE_PLAN_LATEST_VERSION#v}-00" \
-          "kubectl=${SYSTEM_UPGRADE_PLAN_LATEST_VERSION#v}-00"
+          "kubeadm=${VER}-00" \
+          "kubelet=${VER}-00" \
+          "kubectl=${VER}-00"
         apt-mark hold kubeadm kubelet kubectl
+        apt-get install -y cri-o cri-o-runc cri-tools
 
         kubeadm upgrade node
 
