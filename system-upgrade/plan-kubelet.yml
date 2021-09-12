@@ -29,12 +29,12 @@ spec:
           > /etc/apt/sources.list.d/crio.list
 
         apt-get update
+        apt-get dist-upgrade -y
         apt-get install -y --allow-change-held-packages \
           "kubeadm=${VER}-00" \
           "kubelet=${VER}-00" \
           "kubectl=${VER}-00"
         apt-mark hold kubeadm kubelet kubectl
-        apt-get install -y cri-o cri-o-runc cri-tools
 
         kubeadm upgrade node
 
