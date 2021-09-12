@@ -5,7 +5,7 @@ metadata:
   name: kubelet
   namespace: system-upgrade
 spec:
-  version: v1.22.0
+  version: v1.22.1
   concurrency: 1
   nodeSelector:
     matchExpressions:
