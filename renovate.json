@@ -1,6 +1,12 @@
 {
   "extends": ["config:base"],
   "assignees": ["mhutter"],
+  "argocd": {
+    "fileMatch": [
+      "^root/.+\\.ya?ml$",
+      "^install\\.yml$"
+    ]
+  },
   "regexManagers": [{
     "fileMatch": ["^system-upgrade/plan-.+\\.ya?ml$"],
     "matchStrings": ["version: (?<currentValue>.*)\n"],
