@@ -8,6 +8,7 @@ metadata:
     app: podinfo
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
+    nginx.ingress.kubernetes.io/service-upstream: "true"
 spec:
   rules:
     - host: podinfo.app.mhnet.dev
