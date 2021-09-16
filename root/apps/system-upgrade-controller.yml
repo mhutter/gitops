@@ -13,7 +13,7 @@ spec:
     targetRevision: HEAD
     path: system-upgrade/
   destination:
-    namespace: kube-system
+    namespace: system-upgrade
     server: https://kubernetes.default.svc
   syncPolicy:
     automated:
