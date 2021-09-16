@@ -2,7 +2,7 @@
 apiVersion: upgrade.cattle.io/v1
 kind: Plan
 metadata:
-  name: kubelet
+  name: kubernetes
   namespace: system-upgrade
 spec:
   # I don't use "channel" here so I can control myself when an upgrade is
