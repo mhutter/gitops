@@ -16,6 +16,8 @@ spec:
       values: |-
         controller:
           kind: DaemonSet
+          annotations:
+            linkerd.io/inject: enabled
           service:
             type: NodePort
           nodeSelector:
