@@ -1,10 +1,17 @@
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+
 resources:
   - 'https://github.com/rancher/system-upgrade-controller/releases/download/v0.7.5/system-upgrade-controller.yaml'
-  - plan-cluster.yml
-  - plan-kubelet.yml
+  - plan-kubernetes.yml
+
+secretGenerator:
+  - name: scripts
+    files:
+      - upgrade-k8s.sh
+    options:
+      disableNameSuffixHash: true
 
 patches:
   - target:
