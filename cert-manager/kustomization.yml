@@ -4,5 +4,5 @@ kind: Kustomization
 # don't use namespace here or RBAC rolebindings will be created in wrong
 # namespaces
 resources:
-  - 'https://github.com/jetstack/cert-manager/releases/download/v1.5.4/cert-manager.yaml'
+  - 'https://github.com/jetstack/cert-manager/releases/download/v1.6.1/cert-manager.yaml'
   - clusterissuer.yml
